@@ -1,5 +1,3 @@
-"use client"
-
 import { Calendar } from "lucide-react"
 import {
   Card,
@@ -15,7 +13,7 @@ const SearchHome = () => {
   return (
     <div className="flex flex-col items-center justify-center py-8">
       <div className="flex items-center justify-center gap-4">
-        <Card>
+        <Card className="flex flex-col items-center">
           <CardHeader>
             <CardTitle className="flex justify-between gap-4 text-xl">
               Data Início Prevista
@@ -28,7 +26,7 @@ const SearchHome = () => {
             <DatePicker />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="flex flex-col items-center">
           <CardHeader>
             <CardTitle className="flex justify-between gap-4 text-xl">
               Data Fim Prevista <Calendar />
