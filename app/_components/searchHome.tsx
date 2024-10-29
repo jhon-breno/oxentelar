@@ -31,7 +31,7 @@ const SearchHome = () => {
             <CardTitle className="flex justify-between gap-4 text-xl">
               Data Fim Prevista <Calendar />
             </CardTitle>
-            <CardDescription>Fim da Locação</CardDescription>
+            <CardDescription>Fim da Locação Prevista</CardDescription>
           </CardHeader>
           <CardContent>
             <DatePicker />
