@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Meu schema
+
+// Tabela de Usuários
+model User {
+  id             Int             @id @default(autoincrement())
+  name           String
+  email          String          @unique
+  password       String
+  phone          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  properties     Property[] // Relacionamento com imóveis cadastrados pelo usuário
+  rentalRequests RentalRequest[] // Relacionamento com pedidos de locação feitos pelo usuário
+  sentMessages    Message[]       @relation("SenderRelation")
+  receivedMessages Message[]      @relation("ReceiverRelation")
+}
+
+// Tabela de Imóveis
+model Property {
+  id             Int             @id @default(autoincrement())
+  title          String
+  description    String
+  price          Decimal         @db.Decimal(10, 2)
+  address        String
+  city           String
+  state          String
+  postalCode     String
+  propertyType   String // Tipo de imóvel (casa, apartamento, etc.)
+  status         PropertyStatus  @default(AVAILABLE) // Status do imóvel
+  userId         Int
+  user           User            @relation(fields: [userId], references: [id])
+  images         Image[] // Relacionamento com imagens do imóvel
+  rentalRequests RentalRequest[] // Relacionamento com pedidos de locação relacionados ao imóvel
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+// Enum para Status do Imóvel
+enum PropertyStatus {
+  AVAILABLE
+  RENTED
+  UNDER_CONTRACT
+}
+
+// Tabela de Imagens dos Imóveis
+model Image {
+  id         Int      @id @default(autoincrement())
+  url        String
+  propertyId Int
+  property   Property @relation(fields: [propertyId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+// Tabela de Pedidos de Locação
+model RentalRequest {
+  id         Int           @id @default(autoincrement())
+  userId     Int
+  user       User          @relation(fields: [userId], references: [id])
+  propertyId Int
+  property   Property      @relation(fields: [propertyId], references: [id])
+  message    String?
+  status     RequestStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  Message    Message[]
+}
+
+// Enum para Status do Pedido de Locação
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+// Tabela de Mensagens entre usuários (para comunicação no sistema)
+model Message {
+  id              Int            @id @default(autoincrement())
+  content         String
+  senderId        Int
+  receiverId      Int
+  sender      User @relation("SenderRelation", fields: [senderId], references: [id])
+  receiver    User @relation("ReceiverRelation", fields: [receiverId], references: [id])
+  rentalRequest   RentalRequest? @relation(fields: [rentalRequestId], references: [id])
+  rentalRequestId Int?
+  createdAt       DateTime       @default(now())
+  userId          Int?
+}

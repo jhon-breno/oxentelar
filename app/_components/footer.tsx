@@ -1,6 +1,7 @@
 import { Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react"
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear()
   return (
     <footer className="bottom-0 w-full items-start bg-gray-900 p-8 text-gray-300">
       <div className="container mx-auto flex flex-col items-center justify-between md:flex-row">
@@ -53,7 +54,7 @@ const Footer = () => {
         {/* Direitos Autorais */}
         <div className="text-center md:text-left">
           <p className="text-sm">
-            &copy; 2024 OxenteLar. Todos os direitos reservados.
+            &copy; {currentYear} OxenteLar. Todos os direitos reservados.
           </p>
         </div>
       </div>
