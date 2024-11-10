@@ -74,6 +74,7 @@ const config = {
       },
       backgroundImage: {
         "banner-bg": "url('../public/assets/image-1.jpg')",
+        "map-bg": "url(/world-map.png)",
       },
     },
   },
