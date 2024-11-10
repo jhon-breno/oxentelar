@@ -1,16 +1,26 @@
+"use client"
 import {
   Building2Icon,
   Home,
   HousePlus,
+  LogInIcon,
   LogOut,
   MenuIcon,
   Search,
   Settings2,
 } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog"
 
 const SheetMenu = () => {
   return (
@@ -18,40 +28,73 @@ const SheetMenu = () => {
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <Sheet>
           <SheetTrigger asChild>
-            <Button size="icon" variant="outline" className="xl:hidden">
+            <Button variant="outline" className="h-16 w-16 xl:hidden">
               <span className="sr-only">Abrir/Fechar</span>
-              <MenuIcon />
+              <MenuIcon className="!h-8 !w-8" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="sm:max-w-x">
             <nav className="flex h-full flex-col justify-between text-lg font-medium">
               <div className="grid gap-6">
-                <Link href="#" className="flex" prefetch={false}>
-                  <div className="flex items-center gap-2 text-gray-700">
-                    <Image
-                      src="/favicon.ico"
-                      width={64}
-                      height={32}
-                      alt="tese"
-                      className="rounded-3xl"
-                    />
-                    <span>Menu</span>
-                  </div>
-                  <span className="sr-only">Logo do projeto</span>
-                </Link>
-                <div className="border-b"></div>
+                <SheetClose asChild>
+                  <Link href="/" className="flex" prefetch={false}>
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <Image
+                        src="/favicon.ico"
+                        width={64}
+                        height={32}
+                        alt="tese"
+                        className="rounded-3xl"
+                      />
+                      <span>Menu</span>
+                    </div>
+                    <span className="sr-only">Logo do projeto</span>
+                  </Link>
+                </SheetClose>
+                <div className="flex items-center justify-between gap-3 border-b border-solid py-3">
+                  <h2 className="text-lg font-bold">Olá, faça seu login!</h2>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="bg-slate-600 text-white" size="icon">
+                        <LogInIcon />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="w-[90%]">
+                      <DialogHeader>
+                        <DialogTitle>Faça seu login</DialogTitle>
+                        <DialogDescription>
+                          Conecte-se usando sua conta do Google.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <Button
+                        variant="outline"
+                        className="gap-2 text-lg font-semibold"
+                      >
+                        <Image
+                          src="/google-icon.svg"
+                          width={20}
+                          height={20}
+                          alt="Fazer login com Google"
+                        />
+                        Google
+                      </Button>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+
+                <SheetClose asChild>
+                  <Link
+                    href="/"
+                    className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Home className="h-5 w-5 transition-all" />
+                    Início
+                  </Link>
+                </SheetClose>
 
                 <Link
-                  href="#"
-                  className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  prefetch={false}
-                >
-                  <Home className="h-5 w-5 transition-all" />
-                  Início
-                </Link>
-
-                <Link
-                  href="#"
+                  href="/"
                   className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                   prefetch={false}
                 >
@@ -69,7 +112,7 @@ const SheetMenu = () => {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="/"
                   className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                   prefetch={false}
                 >
@@ -78,7 +121,7 @@ const SheetMenu = () => {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="/"
                   className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                   prefetch={false}
                 >
@@ -86,10 +129,10 @@ const SheetMenu = () => {
                   Preferências
                 </Link>
               </div>
+
               <Link
-                href="#"
+                href="/"
                 className="text-gr flex items-center gap-4 border-t px-2.5 pt-4 text-muted-foreground hover:text-foreground"
-                prefetch={false}
               >
                 <LogOut className="h-5 w-5 transition-all" />
                 Sair

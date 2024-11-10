@@ -1,13 +1,12 @@
 import Link from "next/link"
 import { Button } from "./ui/button"
-import SheetMenu from "./sheetMenu"
 import Image from "next/image"
 
 const Header = () => {
   return (
-    <header className="m-0 flex items-center justify-between overflow-ellipsis p-4 xl:justify-center">
-      <Link href="#">
-        <h2 className="m-0 flex items-center gap-2 !text-4xl font-extrabold text-gray-900 hover:text-gray-600">
+    <header className="flex items-center p-4">
+      <Link href="/#">
+        <h2 className="flex items-center gap-2 !text-4xl font-extrabold text-gray-900 hover:text-gray-600">
           <Image
             src="/favicon.ico"
             width={86}
@@ -61,8 +60,6 @@ const Header = () => {
           RESERVE JÁ
         </Button>
       </div>
-      {/* MOBILE */}
-      <SheetMenu />
     </header>
   )
 }
