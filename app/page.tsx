@@ -1,7 +1,7 @@
 import Banner from "./_components/banner"
-import ButtonBook from "./_components/buttonBook"
+import PropertySearch from "./_components/propertySearch"
 import Header from "./_components/header"
-import SearchHome from "./_components/searchHome"
+// import SearchHome from "./_components/searchHome"
 import SheetMenu from "./_components/sheetMenu"
 
 export default function Home() {
@@ -11,9 +11,9 @@ export default function Home() {
         <Header />
         <SheetMenu />
       </div>
-      <ButtonBook />
+      <PropertySearch />
       <Banner />
-      <SearchHome />
+      {/* <SearchHome /> */}
     </div>
   )
 }

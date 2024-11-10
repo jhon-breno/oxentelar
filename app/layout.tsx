@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { Inter } from "next/font/google"
 import Footer from "./_components/footer"
+import AuthProvider from "./providers/auth"
 
 export const metadata: Metadata = {
   title: "Oxente Lar",
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="h-full">{children}</div>
+        <AuthProvider>
+          <div className="h-full">{children}</div>
+        </AuthProvider>
         <Footer />
       </body>
     </html>

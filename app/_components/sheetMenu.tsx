@@ -1,4 +1,5 @@
 "use client"
+
 import {
   Building2Icon,
   Home,
@@ -21,8 +22,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
+import { signIn, signOut, useSession } from "next-auth/react"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 const SheetMenu = () => {
+  const { data } = useSession()
+  const handleLoginWithGoogleClick = () => signIn("google")
+  const handleLogoutClick = () => signOut()
+
   return (
     <div className="flex flex-col sm:pl-14 xl:hidden xl:gap-4 xl:py-4">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -43,7 +50,7 @@ const SheetMenu = () => {
                         src="/favicon.ico"
                         width={64}
                         height={32}
-                        alt="tese"
+                        alt="logo"
                         className="rounded-3xl"
                       />
                       <span>Menu</span>
@@ -52,34 +59,57 @@ const SheetMenu = () => {
                   </Link>
                 </SheetClose>
                 <div className="flex items-center justify-between gap-3 border-b border-solid py-3">
-                  <h2 className="text-lg font-bold">Olá, faça seu login!</h2>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button className="bg-slate-600 text-white" size="icon">
-                        <LogInIcon />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="w-[90%]">
-                      <DialogHeader>
-                        <DialogTitle>Faça seu login</DialogTitle>
-                        <DialogDescription>
-                          Conecte-se usando sua conta do Google.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <Button
-                        variant="outline"
-                        className="gap-2 text-lg font-semibold"
-                      >
-                        <Image
-                          src="/google-icon.svg"
-                          width={20}
-                          height={20}
-                          alt="Fazer login com Google"
-                        />
-                        Google
-                      </Button>
-                    </DialogContent>
-                  </Dialog>
+                  {data?.user ? (
+                    <div className="flex items-center gap-2">
+                      <Avatar>
+                        <AvatarImage src={data?.user?.image ?? ""} />
+                        <AvatarFallback>DV</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-bold">Olá, {data.user.name}</p>
+                        <p className="text-xs text-gray-400">
+                          {data.user.email}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <h2 className="text-lg font-bold">
+                        Olá, faça seu login!
+                      </h2>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            className="bg-slate-600 text-white"
+                            size="icon"
+                          >
+                            <LogInIcon />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="w-[90%]">
+                          <DialogHeader>
+                            <DialogTitle>Faça seu login</DialogTitle>
+                            <DialogDescription>
+                              Conecte-se usando sua conta do Google.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <Button
+                            variant="outline"
+                            className="gap-2 text-lg font-semibold"
+                            onClick={handleLoginWithGoogleClick}
+                          >
+                            <Image
+                              src="/google-icon.svg"
+                              width={20}
+                              height={20}
+                              alt="Fazer login com Google"
+                            />
+                            Google
+                          </Button>
+                        </DialogContent>
+                      </Dialog>
+                    </>
+                  )}
                 </div>
 
                 <SheetClose asChild>
@@ -130,13 +160,22 @@ const SheetMenu = () => {
                 </Link>
               </div>
 
-              <Link
-                href="/"
-                className="text-gr flex items-center gap-4 border-t px-2.5 pt-4 text-muted-foreground hover:text-foreground"
-              >
-                <LogOut className="h-5 w-5 transition-all" />
-                Sair
-              </Link>
+              {data?.user ? (
+                <div className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
+                  <Button
+                    variant="ghost"
+                    className="gap-2 text-lg"
+                    onClick={handleLogoutClick}
+                  >
+                    <LogOut />
+                    Sair
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center border-t border-solid py-2">
+                  <p>Oxente Lar</p>
+                </div>
+              )}
             </nav>
           </SheetContent>
         </Sheet>
