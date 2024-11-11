@@ -3,6 +3,7 @@ import PropertySearch from "./_components/propertySearch"
 import Header from "./_components/header"
 // import SearchHome from "./_components/searchHome"
 import SheetMenu from "./_components/sheetMenu"
+import QuicSearch from "./_components/quickSearch"
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <SheetMenu />
       </div>
       <PropertySearch />
+      <QuicSearch />
       <Banner />
       {/* <SearchHome /> */}
     </div>

@@ -14,7 +14,7 @@ const PropertySearch = () => {
   const { data } = useSession()
   return (
     <div className="bg-map-bg flex flex-col items-center bg-cover bg-center bg-no-repeat">
-      <h1 className="text-2xl font-semibold">
+      <h1 className="py-2 text-2xl font-semibold">
         {data?.user ? (
           <p>
             Olá {data.user.name?.split(" ")[0]}, encontre seu
