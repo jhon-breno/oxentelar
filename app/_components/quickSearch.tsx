@@ -25,15 +25,6 @@ const QuicSearch = () => {
           <p className="text-sm text-gray-400">Kitnet</p>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <Image
-            width={35}
-            height={35}
-            src="/farm-icon.png"
-            alt="Casa no Campo"
-          />
-          <p className="text-sm text-gray-400">Casa no Campo</p>
-        </div>
-        <div className="flex flex-col items-center gap-1">
           <Image width={35} height={35} src="/loja.png" alt="Comercial" />
           <p className="text-sm text-gray-400">Comercial</p>
         </div>

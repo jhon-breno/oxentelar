@@ -4,8 +4,9 @@ import Header from "./_components/header"
 // import SearchHome from "./_components/searchHome"
 import SheetMenu from "./_components/sheetMenu"
 import QuicSearch from "./_components/quickSearch"
+import RecommendedProperty from "./_components/recommendedProperty"
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="my-0 w-full">
       <div className="flex items-center justify-between xl:justify-center">
@@ -15,7 +16,10 @@ export default function Home() {
       <PropertySearch />
       <QuicSearch />
       <Banner />
+      <RecommendedProperty />
       {/* <SearchHome /> */}
     </div>
   )
 }
+
+export default Home

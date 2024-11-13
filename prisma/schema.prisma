@@ -75,7 +75,13 @@ model VerificationToken {
 model Property {
   id            String   @id @default(uuid())
   name          String
-  Location      String
+  type          String
+  street        String
+  number        Int
+  complement    String
+  neighborhood  String
+  city          String
+  state         String
   startDate     DateTime
   endDate       DateTime
   pricePerMonth Decimal  @db.Decimal(10, 2)
@@ -83,9 +89,11 @@ model Property {
   coverImage    String
   imagesURL     String[]
   highlights    String[]
+  status        String
   maxGuests     Int
   createdAt     DateTime @default(now())
   updateAt      DateTime @updatedAt
+  recommended   Boolean  @default(false)
 
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
