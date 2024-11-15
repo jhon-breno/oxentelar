@@ -1,10 +1,10 @@
-import { Button } from "@/app/_components/ui/button"
-import { Input } from "@/app/_components/ui/input"
 import { db } from "@/app/_lib/prisma"
 import { MapPin } from "lucide-react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import React from "react"
+import PropertyDescription from "./_components/propertyDescription"
+import ProperyReservation from "./_components/propertyReservation"
 
 interface PropertyPageProps {
   params: {
@@ -52,12 +52,10 @@ const PropertyDetails = async ({ params }: PropertyPageProps) => {
           </span>
         </p>
       </div>
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex gap-5">
-          <Input type="date" />
-          <Input type="time" />
-        </div>
-        <Button className="mb-4 bg-purple-800">Agendar Visita</Button>
+      <ProperyReservation property={property} />
+      <div className="flex flex-col items-center gap-2">
+        {/* Passando o property como prop */}
+        <PropertyDescription property={property} />
       </div>
     </div>
   )
