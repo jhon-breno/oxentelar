@@ -12,9 +12,9 @@ const PropertyDescription = ({ property }: PropertyDescriptionProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 py-6">
-      <h3 className="text-primaryDarker font-bold">Sobre o Imóvel</h3>
-      <p className="text-primaryDarker mt-1 text-xs leading-5">
+    <div className="flex flex-col gap-2 p-6">
+      <h3 className="font-bold text-primaryDarker">Sobre o Imóvel</h3>
+      <p className="mt-1 text-xs leading-5 text-primaryDarker">
         {property.description}
       </p>
     </div>
