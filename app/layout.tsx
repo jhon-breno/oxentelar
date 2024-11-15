@@ -3,6 +3,8 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import Footer from "./_components/footer"
 import AuthProvider from "./providers/auth"
+import Header from "./_components/header"
+import SheetMenu from "./_components/sheetMenu"
 
 export const metadata: Metadata = {
   title: "Oxente Lar",
@@ -23,6 +25,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <AuthProvider>
+          <div className="flex items-center justify-between xl:justify-center">
+            <Header />
+            <SheetMenu />
+          </div>
           <div className="h-full">{children}</div>
         </AuthProvider>
         <Footer />
