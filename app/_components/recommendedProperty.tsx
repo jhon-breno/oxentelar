@@ -2,8 +2,9 @@ import { db } from "../_lib/prisma"
 import PropertyItem from "./propertyItem"
 
 const RecommendedProperty = async () => {
-  const property = await db.property.findMany({ where: { recommended: true } })
-  console.log(property)
+  const properties = await db.property.findMany({
+    where: { recommended: true },
+  })
   return (
     <div className="container mx-auto p-5">
       <div className="flex items-center gap-2">
@@ -13,9 +14,9 @@ const RecommendedProperty = async () => {
         </h2>
         <div className="h-[1px] w-full bg-gray-300"></div>
       </div>
-      {property.map((property) => (
-        <div className="mt-5 flex flex-col items-center">
-          <PropertyItem key={property.id} property={property} />
+      {properties.map((property) => (
+        <div key={property.id} className="mt-5 flex flex-col items-center">
+          <PropertyItem property={property} />
         </div>
       ))}
     </div>

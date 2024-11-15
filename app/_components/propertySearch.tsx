@@ -14,7 +14,7 @@ const PropertySearch = () => {
   const { data } = useSession()
   return (
     <div className="bg-map-bg flex flex-col items-center bg-cover bg-center bg-no-repeat">
-      <h1 className="py-2 text-2xl font-semibold">
+      <h1 className="ml-4 py-2 text-2xl font-semibold">
         {data?.user ? (
           <p>
             Olá {data.user.name?.split(" ")[0]}, encontre seu
@@ -31,7 +31,7 @@ const PropertySearch = () => {
         <Input type="text" placeholder="Onde prefere se aconchegar?" />
         <div className="flex gap-2">
           <Select>
-            <SelectTrigger className="min-w-[150px!] max-w-[150px!]">
+            <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Tipo de imóvel" />
             </SelectTrigger>
             <SelectContent>
@@ -43,12 +43,12 @@ const PropertySearch = () => {
             </SelectContent>
           </Select>
           <Input
-            className="w-[500px!]"
+            className="xl:w-[200px]"
             type="number"
             placeholder="R$ Valor Máximo"
           />
         </div>
-        <Button className="w-[100%] bg-purple-600 text-white hover:bg-purple-500 xl:w-[50%]">
+        <Button className="w-[100%] bg-purple-600 text-white hover:bg-purple-500 xl:w-[250px]">
           Buscar
         </Button>
       </div>
