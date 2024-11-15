@@ -24,10 +24,19 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        primary: "#590BD8",
+        primaryLighter: "#DDD5EA",
+        primaryDarker: "#312A4F",
+        grayPrimary: "#717171",
+        grayLighter: "#BBBFBF",
+        walterWhite: "#F5F5F5",
+        textColor: {
+          dark: "#717171",
         },
+        // primary: {
+        //   DEFAULT: "hsl(var(--primary))",
+        //   foreground: "hsl(var(--primary-foreground))",
+        // },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
