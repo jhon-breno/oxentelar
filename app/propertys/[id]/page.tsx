@@ -6,6 +6,7 @@ import React from "react"
 import PropertyDescription from "./_components/propertyDescription"
 import ProperyReservation from "./_components/propertyReservation"
 import PropertyHighligths from "./_components/propertyHighlights"
+import Map from "./_components/maps"
 
 interface PropertyPageProps {
   params: {
@@ -58,6 +59,9 @@ const PropertyDetails = async ({ params }: PropertyPageProps) => {
         {/* Passando o property como prop */}
         <PropertyDescription property={property} />
         <PropertyHighligths highligths={property.highlights} />
+      </div>
+      <div>
+        <Map />
       </div>
     </div>
   )
