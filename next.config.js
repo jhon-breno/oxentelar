@@ -1,6 +1,12 @@
-// next.config.js
 module.exports = {
   images: {
-    domains: ["www.sj.com.br"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.sj.com.br",
+        port: "",
+        pathname: "/**/**/**",
+      },
+    ],
   },
 }
