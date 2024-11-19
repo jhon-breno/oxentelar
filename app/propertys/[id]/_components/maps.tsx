@@ -27,7 +27,9 @@ const Map: React.FC = () => {
   return (
     <div className="p-6">
       {mapLoaded ? (
-        <LoadScript googleMapsApiKey="AIzaSyAsv1WHPnFja282T6xAgPelMCF6ZU1hR6U">
+        <LoadScript
+          googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}
+        >
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
