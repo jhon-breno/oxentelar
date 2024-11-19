@@ -61,7 +61,7 @@ const PropertyDetails = async ({ params }: PropertyPageProps) => {
         <PropertyHighligths highligths={property.highlights} />
       </div>
       <div>
-        <Map />
+        <Map property={property} />
       </div>
     </div>
   )
