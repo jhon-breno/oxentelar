@@ -35,7 +35,7 @@ async function main() {
       maxGuests: 10,
       recommended: true,
       owner: {
-        connect: { id: "cm3btgkt30000aujnktn4oau7" },
+        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
       },
     },
     {
@@ -68,7 +68,7 @@ async function main() {
       maxGuests: 4,
       recommended: true,
       owner: {
-        connect: { id: "cm3btgkt30000aujnktn4oau7" },
+        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
       },
     },
     {
@@ -103,7 +103,7 @@ async function main() {
       maxGuests: 4,
       recommended: true,
       owner: {
-        connect: { id: "cm3btgkt30000aujnktn4oau7" },
+        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
       },
     },
     {
@@ -133,7 +133,7 @@ async function main() {
       maxGuests: 4,
       recommended: true,
       owner: {
-        connect: { id: "cm3btgkt30000aujnktn4oau7" },
+        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
       },
     },
     // Adicione mais propriedades conforme necessário
