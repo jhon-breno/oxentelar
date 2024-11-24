@@ -3,9 +3,7 @@ import { NextResponse } from "next/server"
 
 export async function GET(
   request: Request,
-  {
-    params: { userId },
-  }: { params: { propertyId: string } } & { params: { userId: string } },
+  { params: { userId } }: { params: { userId: string } },
 ) {
   const { searchParams } = new URL(request.url)
 
@@ -13,7 +11,7 @@ export async function GET(
     return {
       status: 400,
       body: {
-        message: "userId is required",
+        message: "Missing userId",
       },
     }
   }
