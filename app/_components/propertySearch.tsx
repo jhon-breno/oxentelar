@@ -1,5 +1,8 @@
 "use client"
+
+import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
+import { useState } from "react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import {
@@ -12,8 +15,27 @@ import {
 
 const PropertySearch = () => {
   const { data } = useSession()
+  const router = useRouter()
+
+  // Estados para armazenar os filtros
+  const [location, setLocation] = useState("")
+  const [propertyType, setPropertyType] = useState("")
+  const [maxPrice, setMaxPrice] = useState("")
+
+  // Função para realizar a busca
+  const handleSearch = () => {
+    const queryParams = new URLSearchParams()
+
+    if (location) queryParams.append("location", location)
+    if (propertyType) queryParams.append("propertyType", propertyType)
+    if (maxPrice) queryParams.append("maxPrice", maxPrice)
+
+    // Redirecionar para a página de propriedades com os parâmetros
+    router.push(`/propertys?${queryParams.toString()}`)
+  }
+
   return (
-    <div className="bg-map-bg flex flex-col items-center bg-cover bg-center bg-no-repeat">
+    <div className="flex flex-col items-center bg-map-bg bg-cover bg-center bg-no-repeat">
       <h1 className="ml-4 py-2 text-2xl font-semibold">
         {data?.user ? (
           <p>
@@ -28,9 +50,14 @@ const PropertySearch = () => {
         )}
       </h1>
       <div className="flex w-[500px!] flex-col items-center gap-4 p-4 xl:flex-row">
-        <Input type="text" placeholder="Onde prefere se aconchegar?" />
+        <Input
+          type="text"
+          placeholder="Onde prefere se aconchegar?"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
         <div className="flex gap-2">
-          <Select>
+          <Select onValueChange={(value) => setPropertyType(value)}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Tipo de imóvel" />
             </SelectTrigger>
@@ -46,9 +73,14 @@ const PropertySearch = () => {
             className="xl:w-[200px]"
             type="number"
             placeholder="R$ Valor Máximo"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
           />
         </div>
-        <Button className="w-[100%] bg-purple-600 text-white hover:bg-purple-500 xl:w-[250px]">
+        <Button
+          className="w-[100%] bg-purple-600 text-white hover:bg-purple-500 xl:w-[250px]"
+          onClick={handleSearch}
+        >
           Buscar
         </Button>
       </div>
@@ -57,22 +89,3 @@ const PropertySearch = () => {
 }
 
 export default PropertySearch
-
-// "use client"
-
-// import { Button } from "./ui/button"
-
-// const ButtonBook = () => {
-//   return (
-//     <div className="mx-2 flex">
-//       <Button
-//         className="h-14 w-full rounded-sm border-black text-xl !text-gray-900 xl:hidden"
-//         variant="outline"
-//       >
-//         RESERVE J
-//       </Button>
-//     </div>
-//   )
-// }
-
-// export default ButtonBook
