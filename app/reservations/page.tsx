@@ -16,31 +16,30 @@ const MyReservations = () => {
   const { status, data } = useSession()
   const router = useRouter()
 
-  useEffect(() => {
-    if (status === "unauthenticated" || !data?.user) {
-      return router.push("/")
+  const fetchReservations = async () => {
+    const userId = (data?.user as any)?.id
+    console.log("User ID:", userId) // Verifique se o userId está correto
+
+    if (!userId) {
+      console.error("User ID is missing!")
+      return
     }
 
-    const fetchReservations = async () => {
-      const userId = (data?.user as any)?.id
-      console.log("User ID:", userId) // Verifique se o userId está correto
+    const response = await fetch(
+      `http://localhost:3000/api/user/${userId}/reservations`,
+    )
 
-      if (!userId) {
-        console.error("User ID is missing!")
-        return
-      }
+    if (!response.ok) {
+      console.error("Error fetching reservations:", response.statusText)
+      return
+    }
 
-      const response = await fetch(
-        `http://localhost:3000/api/user/${userId}/reservations`,
-      )
-
-      if (!response.ok) {
-        console.error("Error fetching reservations:", response.statusText)
-        return
-      }
-
-      const json = await response.json()
-      setReservations(json)
+    const json = await response.json()
+    setReservations(json)
+  }
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      return router.push("/")
     }
 
     fetchReservations()
@@ -53,7 +52,11 @@ const MyReservations = () => {
       </h1>
       {reservations.length > 0 ? (
         reservations?.map((reservation) => (
-          <UserReservationItem key={reservation.id} reservation={reservation} />
+          <UserReservationItem
+            key={reservation.id}
+            reservation={reservation}
+            fetchReservations={fetchReservations}
+          />
         ))
       ) : (
         <div className="flex flex-col">

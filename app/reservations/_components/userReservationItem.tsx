@@ -19,9 +19,13 @@ interface UserReservationItemProps {
   reservation: Prisma.PropertyReservationsGetPayload<{
     include: { property: true }
   }>
+  fetchReservations: () => void
 }
 
-const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
+const UserReservationItem = ({
+  reservation,
+  fetchReservations,
+}: UserReservationItemProps) => {
   const [open, setOpen] = useState(false) // Controla a abertura do Alert Dialog
 
   // Extração de data e hora de startDate
@@ -56,9 +60,10 @@ const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
         description: "Reserva cancelada com sucesso.",
         variant: "success",
       })
-      setTimeout(() => {
-        window.location.reload()
-      }, 3000)
+      fetchReservations() // Atualiza a lista de reservas
+      //   setTimeout(() => {
+      //     window.location.reload()
+      //   }, 3000)
     } catch (error) {
       toast({
         title: "Erro",
