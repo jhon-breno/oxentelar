@@ -35,13 +35,13 @@ const Header = () => {
           </Link>
           <Link
             className="font-bold text-gray-900 hover:text-gray-400"
-            href="#"
+            href="propertys/?propertyType=casa"
           >
-            Casas/Apartamentos
+            Casas
           </Link>
           <Link
             className="font-bold text-gray-900 hover:text-gray-400"
-            href="#"
+            href="/propertys/?propertyType=comercial"
           >
             Comercial
           </Link>
@@ -60,12 +60,14 @@ const Header = () => {
           </Link>
         </nav>
 
-        <Button
-          className="mx-4 hidden rounded-sm border-black text-sm xl:flex"
-          variant="outline"
-        >
-          RESERVE JÁ
-        </Button>
+        <Link href="/explorer">
+          <Button
+            className="mx-4 hidden rounded-sm border-black text-sm xl:flex"
+            variant="outline"
+          >
+            RESERVE JÁ
+          </Button>
+        </Link>
       </div>
     </header>
   )

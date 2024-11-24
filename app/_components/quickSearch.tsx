@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 const QuicSearch = () => {
   return (
@@ -12,22 +13,30 @@ const QuicSearch = () => {
       </div>
 
       <div className="flex justify-between gap-2 p-2">
-        <div className="flex flex-col items-center gap-1">
-          <Image width={35} height={35} src="/hotel-icon.png" alt="Hotel" />
-          <p className="text-sm text-gray-400">Apartamento</p>
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <Image width={35} height={35} src="/cottage-icon.png" alt="Casa" />
-          <p className="text-sm text-gray-400">Casa</p>
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <Image width={35} height={35} src="/home.png" alt="Kitnet" />
-          <p className="text-sm text-gray-400">Kitnet</p>
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <Image width={35} height={35} src="/loja.png" alt="Comercial" />
-          <p className="text-sm text-gray-400">Comercial</p>
-        </div>
+        <Link href="/propertys/?propertyType=apartamento">
+          <div className="flex flex-col items-center gap-1">
+            <Image width={35} height={35} src="/hotel-icon.png" alt="Hotel" />
+            <p className="text-sm text-gray-400">Apartamento</p>
+          </div>
+        </Link>
+        <Link href="propertys/?propertyType=casa">
+          <div className="flex flex-col items-center gap-1">
+            <Image width={35} height={35} src="/cottage-icon.png" alt="Casa" />
+            <p className="text-sm text-gray-400">Casa</p>
+          </div>
+        </Link>
+        <Link href="propertys/?propertyType=kitnet">
+          <div className="flex flex-col items-center gap-1">
+            <Image width={35} height={35} src="/home.png" alt="Kitnet" />
+            <p className="text-sm text-gray-400">Kitnet</p>
+          </div>
+        </Link>
+        <Link href="/propertys/?propertyType=comercial">
+          <div className="flex flex-col items-center gap-1">
+            <Image width={35} height={35} src="/loja.png" alt="Comercial" />
+            <p className="text-sm text-gray-400">Comercial</p>
+          </div>
+        </Link>
       </div>
     </div>
   )

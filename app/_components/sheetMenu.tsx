@@ -4,6 +4,7 @@ import {
   Building2Icon,
   CalendarClockIcon,
   Home,
+  HotelIcon,
   HousePlus,
   LogInIcon,
   LogOut,
@@ -135,23 +136,37 @@ const SheetMenu = () => {
                   </Link>
                 </SheetClose>
 
-                <Link
-                  href="#"
-                  className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  prefetch={false}
-                >
-                  <HousePlus className="h-5 w-5 transition-all" />
-                  Casas / Apartamentos
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/propertys/?propertyType=casa"
+                    className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <HousePlus className="h-5 w-5 transition-all" />
+                    Casas
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/propertys/?propertyType=apartamento"
+                    className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <HotelIcon className="h-5 w-5 transition-all" />
+                    Apartamento
+                  </Link>
+                </SheetClose>
 
-                <Link
-                  href="/"
-                  className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  prefetch={false}
-                >
-                  <Building2Icon className="h-5 w-5 transition-all" />
-                  Comercial
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/propertys/?propertyType=comercial"
+                    className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Building2Icon className="h-5 w-5 transition-all" />
+                    Comercial
+                  </Link>
+                </SheetClose>
 
                 <SheetClose asChild>
                   <Link

@@ -13,7 +13,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "../_components/ui/button"
 
-// Define o tipo das propriedades
 interface Property {
   id: number
   name: string
@@ -30,7 +29,6 @@ const PropertyList = () => {
   const searchParams = useSearchParams()
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
-
   const router = useRouter()
 
   useEffect(() => {
@@ -47,9 +45,7 @@ const PropertyList = () => {
         if (propertyType) query.append("propertyType", propertyType)
         if (maxPrice) query.append("maxPrice", maxPrice)
 
-        const response = await fetch(
-          `/api/propertys?${query.toString()}`, // Certifique-se de usar o caminho correto
-        )
+        const response = await fetch(`/api/propertys?${query.toString()}`)
         const data = await response.json()
 
         setProperties(data)
@@ -63,7 +59,7 @@ const PropertyList = () => {
     fetchProperties()
   }, [searchParams])
 
-  if (loading) return <p>Carregando...</p>
+  if (loading) return <p className="text-center">Carregando...</p>
 
   return (
     <div className="container mx-auto p-4">
@@ -73,7 +69,7 @@ const PropertyList = () => {
           <p className="mt-4">Nenhuma propriedade encontrada.</p>
           <Button
             className="mt-5 w-full text-white"
-            onClick={() => router.push("/")}
+            onClick={() => router.back()} // Usando router.back() para voltar à página anterior
           >
             Voltar
           </Button>
@@ -121,7 +117,7 @@ const PropertyList = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="relative h-[120px] w-[220px]">
+                  <div className="relative h-[120px] w-[220px] sm:h-[150px] sm:w-[250px] lg:h-[200px] lg:w-[350px]">
                     <Image
                       alt={property.name}
                       src={property.coverImage}
