@@ -124,14 +124,16 @@ const SheetMenu = () => {
                   </Link>
                 </SheetClose>
 
-                <Link
-                  href="/"
-                  className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  prefetch={false}
-                >
-                  <Search className="h-5 w-5 transition-all" />
-                  Explore
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/explorer"
+                    className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Search className="h-5 w-5 transition-all" />
+                    Explore
+                  </Link>
+                </SheetClose>
 
                 <Link
                   href="#"

@@ -29,7 +29,7 @@ const Header = () => {
           </Link>
           <Link
             className="font-bold text-gray-900 hover:text-gray-400"
-            href="#"
+            href="/explorer"
           >
             Explore
           </Link>
