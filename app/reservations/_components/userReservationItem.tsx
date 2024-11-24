@@ -70,7 +70,6 @@ const UserReservationItem = ({
         description: "Não foi possível cancelar a reserva.",
         variant: "destructive",
       })
-      window.location.reload()
     }
   }
 

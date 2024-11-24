@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Prisma, PropertyReservations } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import UserReservationItem from "./_components/userReservationItem"
 import { Button } from "../_components/ui/button"
 
