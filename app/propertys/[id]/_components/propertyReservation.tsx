@@ -5,7 +5,14 @@ import { Property } from "@prisma/client"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/app/_components/ui/dialog"
+import Image from "next/image"
 
 interface PropertyReservationProps {
   property: Property
@@ -19,6 +26,7 @@ interface FormData {
 
 const ProperyReservation = ({ property }: PropertyReservationProps) => {
   const { status } = useSession()
+  const [isModalOpen, setModalOpen] = useState(false)
 
   const {
     register,
@@ -87,7 +95,7 @@ const ProperyReservation = ({ property }: PropertyReservationProps) => {
         alert(res.error.message) // Exibindo o erro para o usuário
       } else {
         if (status === "unauthenticated") {
-          router.push("/")
+          setModalOpen(true) // Abre a modal se o usuário não estiver autenticado
         } else {
           router.push(
             `/checkout?propertyId=${property.id}&date=${data.date}&time=${data.time}`,
@@ -98,9 +106,15 @@ const ProperyReservation = ({ property }: PropertyReservationProps) => {
       }
     }
   }
-  // router.push(
-  //   `/checkout?propertyId=${property.id}&date=${data.date}&time=${data.time}`,
-  // )
+
+  const handleLogin = () => {
+    signIn("google") // Substitua pelo caminho do seu login com Google
+    setModalOpen(false) // Fecha a modal após redirecionamento
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false) // Fecha a modal
+  }
 
   return (
     <div>
@@ -151,6 +165,30 @@ const ProperyReservation = ({ property }: PropertyReservationProps) => {
           </Button>
         </div>
       </div>
+
+      {/* Modal Dialog */}
+      <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
+        <DialogContent>
+          <DialogTitle>Usuário não logado</DialogTitle>
+          <DialogDescription>Deseja realizar login?</DialogDescription>
+          <Button
+            variant="outline"
+            className="gap-2 text-lg font-semibold"
+            onClick={handleLogin}
+          >
+            <Image
+              src="/google-icon.svg"
+              width={20}
+              height={20}
+              alt="Fazer login com Google"
+            />
+            Google
+          </Button>
+          <Button variant="outline" onClick={handleCloseModal}>
+            Fechar
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
