@@ -46,6 +46,13 @@ const Header = () => {
             Comercial
           </Link>
           <Link
+            href="/reservations"
+            className="font-bold text-gray-900 hover:text-gray-400"
+            prefetch={false}
+          >
+            Minhas Reservas
+          </Link>
+          <Link
             className="font-bold text-gray-900 hover:text-gray-400"
             href="#"
           >
