@@ -18,7 +18,8 @@ const CheckoutReservation = ({
   date,
   time,
 }: CheckoutReservationProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false) // Estado para controlar a exibição da modal
+  const [isModalOpen, setIsModalOpen] = useState(false) // Modal de reservas
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false) // Modal de sucesso (Reserva Criada)
   const router = useRouter()
 
   const formattedDate = new Date(`${date}T${time}`).toLocaleString("pt-BR", {
@@ -36,25 +37,73 @@ const CheckoutReservation = ({
     router.push("/")
   }
 
-  const contactUrl = `https://wa.me/5585999469423?text=${encodeURIComponent(
+  const contactUrl = `https://wa.me/${property.owner.phone}?text=${encodeURIComponent(
     `Olá, eu me chamo ${data?.user?.name}.
-  Agendei uma visita para o imóvel ${property.name}, localizado em ${property.street}, ${property.number}, ${property.neighborhood}, ${property.city} - ${property.state}, no dia ${formattedDate} às ${formattedTime}.`,
+    Agendei uma visita para o imóvel ${property.name}, localizado em ${property.street}, ${property.number}, ${property.complement}, ${property.city} - ${property.state}, no dia ${formattedDate} às ${formattedTime}.`,
   )}`
 
-  // Função para abrir a modal
+  // Função para abrir a modal de sucesso
+  const openSuccessModal = () => {
+    setIsSuccessModalOpen(true)
+  }
+
+  // Função para fechar a modal de sucesso
+  const closeSuccessModal = () => {
+    setIsSuccessModalOpen(false)
+  }
+
+  // Função para abrir a modal de reserva
   const openModal = () => {
     setIsModalOpen(true)
   }
 
-  // Função para fechar a modal
+  // Função para fechar a modal de reserva
   const closeModal = () => {
     setIsModalOpen(false)
+  }
+
+  const handleBuyClick = async () => {
+    try {
+      const startDate = new Date(`${date}T${time}`).toISOString() // Converter para o formato ISO 8601
+      const endDate = startDate // Usar a mesma data para endDate, caso seja necessário ajustar, altere aqui
+
+      const response = await fetch(
+        "http://localhost:3000/api/reservations/create",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            propertyId: property.id,
+            startDate: startDate, // Enviar data no formato correto
+            endDate: endDate, // Enviar data no formato correto
+            userId: (data?.user as any)?.id,
+            totalRent: property.pricePerMonth,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      )
+
+      if (!response.ok) {
+        throw new Error(`Erro ao criar reserva: ${response.statusText}`)
+      }
+
+      openSuccessModal()
+    } catch (error) {
+      console.error("Erro ao fazer a requisição:", error)
+    }
   }
 
   // Função para redirecionar para a página de reservas
   const goToReservations = () => {
     router.push("/reservations") // Redirecionar para a página de reservas
-    closeModal() // Fechar a modal
+    closeSuccessModal() // Fechar a modal de sucesso
+  }
+
+  // Função para enviar a mensagem via WhatsApp
+  const sendToOwner = () => {
+    window.open(contactUrl, "_blank") // Abre o WhatsApp com a mensagem
+    closeSuccessModal() // Fechar a modal de sucesso após enviar a mensagem
   }
 
   return (
@@ -91,9 +140,7 @@ const CheckoutReservation = ({
             </div>
           </div>
         </div>
-        {/* <h3 className="mt-3 text-lg font-semibold text-primaryDarker">
-          Valor R$
-        </h3> */}
+
         <div className="mt-3 flex items-center justify-between">
           <p className="font-medium text-primaryDarker">Valor Mensal:</p>
           <p className="font-bold text-primaryDarker">
@@ -104,20 +151,44 @@ const CheckoutReservation = ({
       </div>
 
       <button
-        onClick={() => window.open(contactUrl, "_blank")}
+        onClick={handleBuyClick} // Chamar a função para criar a reserva
         className="w-full rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
       >
         Confirmar e enviar ao Proprietário
       </button>
 
       <button
-        onClick={openModal} // Abrir a modal ao clicar
+        onClick={openModal} // Abrir a modal de reservas
         className="mt-2 w-full rounded bg-primary px-4 py-2 text-white hover:bg-primaryDarker"
       >
         Minhas Reservas
       </button>
 
-      {/* Modal de confirmação */}
+      {/* Modal de sucesso (Reserva Criada) */}
+      {isSuccessModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-sm rounded-lg bg-white p-6">
+            <h2 className="mb-4 text-lg font-semibold">Reserva Criada</h2>
+            <p className="mb-4">Sua reserva foi criada com sucesso!</p>
+            <div className="flex justify-between">
+              <button
+                onClick={goToReservations} // Redirecionar para a página de reservas
+                className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
+              >
+                Ir para minhas reservas
+              </button>
+              <button
+                onClick={sendToOwner} // Enviar a mensagem via WhatsApp
+                className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+              >
+                Enviar ao proprietário
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de reserva */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-sm rounded-lg bg-white p-6">
