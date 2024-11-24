@@ -103,7 +103,7 @@ const CheckoutReservation = ({
   // Função para enviar a mensagem via WhatsApp
   const sendToOwner = () => {
     window.open(contactUrl, "_blank") // Abre o WhatsApp com a mensagem
-    closeSuccessModal() // Fechar a modal de sucesso após enviar a mensagem
+    goToReservations() // Redireciona para a página de Minhas Reservas após enviar a mensagem
   }
 
   return (
@@ -172,13 +172,13 @@ const CheckoutReservation = ({
             <p className="mb-4">Sua reserva foi criada com sucesso!</p>
             <div className="flex justify-between">
               <button
-                onClick={goToReservations} // Redirecionar para a página de reservas
+                onClick={goToReservations} // Redireciona para a página de Minhas Reservas
                 className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
               >
-                Ir para minhas reservas
+                Fechar
               </button>
               <button
-                onClick={sendToOwner} // Enviar a mensagem via WhatsApp
+                onClick={sendToOwner} // Envia mensagem via WhatsApp e redireciona
                 className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
               >
                 Enviar ao proprietário
