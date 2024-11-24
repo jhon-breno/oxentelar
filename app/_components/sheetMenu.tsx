@@ -2,6 +2,7 @@
 
 import {
   Building2Icon,
+  CalendarClockIcon,
   Home,
   HousePlus,
   LogInIcon,
@@ -149,6 +150,17 @@ const SheetMenu = () => {
                   <Building2Icon className="h-5 w-5 transition-all" />
                   Comercial
                 </Link>
+
+                <SheetClose asChild>
+                  <Link
+                    href="/reservations"
+                    className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <CalendarClockIcon className="h-5 w-5 transition-all" />
+                    Minhas Reservas
+                  </Link>
+                </SheetClose>
 
                 <Link
                   href="/"
