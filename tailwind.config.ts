@@ -19,6 +19,10 @@ const config = {
     },
     extend: {
       colors: {
+        success: {
+          DEFAULT: "#22c55e", // Cor principal de sucesso
+          foreground: "#ffffff", // Cor do texto em elementos de sucesso
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

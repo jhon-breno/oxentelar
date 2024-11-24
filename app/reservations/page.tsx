@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Prisma, PropertyReservations } from "@prisma/client"
 import UserReservationItem from "./_components/userReservationItem"
+import { Button } from "../_components/ui/button"
 
 const MyReservations = () => {
   const [reservations, setReservations] = useState<
@@ -50,9 +51,20 @@ const MyReservations = () => {
       <h1 className="text-xl font-semibold text-primaryDarker">
         Minhas Reservas
       </h1>
-      {reservations?.map((reservation) => (
-        <UserReservationItem key={reservation.id} reservation={reservation} />
-      ))}
+      {reservations.length > 0 ? (
+        reservations?.map((reservation) => (
+          <UserReservationItem key={reservation.id} reservation={reservation} />
+        ))
+      ) : (
+        <div className="flex flex-col">
+          <p className="mt-2 font-medium text-primaryDarker">
+            Nenhuma reserva encontrada.
+          </p>
+          <Button className="mt-5 text-white" onClick={() => router.push("/")}>
+            Fazer Reserva
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

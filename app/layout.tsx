@@ -5,6 +5,7 @@ import Footer from "./_components/footer"
 import AuthProvider from "./providers/auth"
 import Header from "./_components/header"
 import SheetMenu from "./_components/sheetMenu"
+import { Toaster } from "./_components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Oxente Lar",
@@ -30,6 +31,7 @@ export default function RootLayout({
             <SheetMenu />
           </div>
           <div className="h-full">{children}</div>
+          <Toaster />
         </AuthProvider>
         <Footer />
       </body>

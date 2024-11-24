@@ -1,7 +1,19 @@
+"use client"
+
 import { Button } from "@/app/_components/ui/button"
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/_components/ui/alert-dialog"
+import { toast } from "@/app/_hooks/use-toast"
 import { Prisma } from "@prisma/client"
 import { CalendarClock, MapPin } from "lucide-react"
 import Image from "next/image"
+import { useState } from "react"
 
 interface UserReservationItemProps {
   reservation: Prisma.PropertyReservationsGetPayload<{
@@ -10,6 +22,8 @@ interface UserReservationItemProps {
 }
 
 const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
+  const [open, setOpen] = useState(false) // Controla a abertura do Alert Dialog
+
   // Extração de data e hora de startDate
   const startDateTime = new Date(reservation.startDate)
 
@@ -24,6 +38,36 @@ const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
     hour: "2-digit",
     minute: "2-digit",
   })
+
+  // Função para cancelar a reserva
+  const handleDeleteReservation = async () => {
+    try {
+      const res = await fetch(`/api/reservations/${reservation.id}`, {
+        method: "DELETE",
+      })
+
+      if (!res.ok) {
+        throw new Error("Erro ao cancelar reserva")
+      }
+
+      setOpen(false) // Fecha o Alert Dialog
+      toast({
+        title: "Sucesso!",
+        description: "Reserva cancelada com sucesso.",
+        variant: "success",
+      })
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000)
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Não foi possível cancelar a reserva.",
+        variant: "destructive",
+      })
+      window.location.reload()
+    }
+  }
 
   return (
     <div className="mt-5 flex items-center gap-3 rounded-lg border border-solid border-grayLighter p-5 shadow-lg">
@@ -60,9 +104,30 @@ const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
               {formattedDate} às {formattedTime}
             </p>
           </div>
-          <Button variant="destructive" className="mt-5">
-            Cancelar
-          </Button>
+
+          {/* Alert Dialog para confirmar cancelamento */}
+          <AlertDialog open={open} onOpenChange={setOpen}>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" className="mt-5">
+                Cancelar
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Tem certeza de que deseja cancelar esta reserva?
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <Button variant="ghost" onClick={() => setOpen(false)}>
+                  Não, voltar
+                </Button>
+                <Button variant="destructive" onClick={handleDeleteReservation}>
+                  Sim, cancelar
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </div>
