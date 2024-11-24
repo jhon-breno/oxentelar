@@ -3,11 +3,15 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { PropertyReservations } from "@prisma/client"
+import { Prisma, PropertyReservations } from "@prisma/client"
 import UserReservationItem from "./_components/userReservationItem"
 
 const MyReservations = () => {
-  const [reservations, setReservations] = useState<PropertyReservations[]>([])
+  const [reservations, setReservations] = useState<
+    Prisma.PropertyReservationsGetPayload<{
+      include: { property: true }
+    }>[]
+  >([])
   const { status, data } = useSession()
   const router = useRouter()
 
