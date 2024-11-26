@@ -12,6 +12,7 @@ async function main() {
       neighborhood: "Beira Mar",
       city: "Fortaleza",
       state: "CE",
+      postalCod: "60000000",
       type: "Casa",
       status: "Disponível",
       startDate: new Date("2024-01-01"),
@@ -35,7 +36,7 @@ async function main() {
       maxGuests: 10,
       recommended: true,
       owner: {
-        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
+        connect: { id: "cm3yqkrv90000xajhihduokez" },
       },
     },
     {
@@ -46,6 +47,7 @@ async function main() {
       neighborhood: "Centro",
       city: "Sobral",
       state: "CE",
+      postalCod: "60000000",
       type: "Apartamento",
       status: "Disponível",
       startDate: new Date("2024-02-01"),
@@ -68,7 +70,7 @@ async function main() {
       maxGuests: 4,
       recommended: true,
       owner: {
-        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
+        connect: { id: "cm3yqkrv90000xajhihduokez" },
       },
     },
     {
@@ -79,6 +81,7 @@ async function main() {
       neighborhood: "Jardim Cearense",
       city: "Fortaleza",
       state: "CE",
+      postalCod: "60000000",
       type: "Casa",
       status: "Disponível",
       startDate: new Date("2024-02-01"),
@@ -103,7 +106,7 @@ async function main() {
       maxGuests: 4,
       recommended: true,
       owner: {
-        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
+        connect: { id: "cm3yqkrv90000xajhihduokez" },
       },
     },
     {
@@ -114,6 +117,7 @@ async function main() {
       neighborhood: "Novo Mondubim",
       city: "Fortaleza",
       state: "CE",
+      postalCod: "60764325",
       type: "Casa",
       status: "Locada",
       startDate: new Date("2024-02-01"),
@@ -133,7 +137,7 @@ async function main() {
       maxGuests: 4,
       recommended: true,
       owner: {
-        connect: { id: "cm3uj55o3000011gcy9gy6k0e" },
+        connect: { id: "cm3yqkrv90000xajhihduokez" },
       },
     },
     // Adicione mais propriedades conforme necessário

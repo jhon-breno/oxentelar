@@ -81,6 +81,7 @@ model Property {
   number        Int
   complement    String
   neighborhood  String
+  postalCod     String
   city          String
   state         String
   startDate     DateTime
