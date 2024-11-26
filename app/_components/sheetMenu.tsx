@@ -187,6 +187,23 @@ const SheetMenu = () => {
                   <Settings2 className="h-5 w-5 transition-all" />
                   Preferências
                 </Link>
+
+                {data?.user ? (
+                  <SheetClose asChild>
+                    <Link
+                      href="/createProperty"
+                      className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                      prefetch={false}
+                    >
+                      <HousePlus className="h-5 w-5 transition-all" />
+                      Adicionar Imóvel
+                    </Link>
+                  </SheetClose>
+                ) : (
+                  <div className="flex items-center justify-center border-t border-solid py-2">
+                    <p>Oxente Lar</p>
+                  </div>
+                )}
               </div>
 
               {data?.user ? (
