@@ -38,14 +38,6 @@ const Footer = () => {
           <h2 className="mb-3 text-xl font-semibold text-white">Redes</h2>
           <div className="flex space-x-4">
             <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-white"
-            >
-              <Facebook className="h-6 w-6" />
-            </a>
-            <a
               href="https://instagram.com/jhonbrenocosta"
               target="_blank"
               rel="noopener noreferrer"
