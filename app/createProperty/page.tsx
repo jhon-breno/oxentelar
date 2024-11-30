@@ -57,7 +57,7 @@ const MyProperties = () => {
   }, [])
 
   const handlePriceChange = (value: number) => {
-    const valueString = value."toString"().replace(/\D/g, "") // Remove caracteres não numéricos
+    const valueString = value.toString().replace(/\D/g, "") // Remove caracteres não numéricos
     const formatted = (Number(valueString) / 100).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
