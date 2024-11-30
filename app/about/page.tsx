@@ -128,7 +128,7 @@ const About = () => {
             <div className="mt-4 flex flex-col items-center justify-center gap-4">
               <div className="mx-4 mt-8 flex items-center justify-between gap-4 text-primaryDarker">
                 <Link
-                  href="https://Instagram.com/jhonbrenocosta"
+                  href="https://Instagram.com/willams_torres_bastos"
                   className="flex items-center gap-2 text-primaryDarker"
                   target="_blank"
                   rel="noopener noreferrer"
