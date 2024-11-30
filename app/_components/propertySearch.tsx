@@ -64,7 +64,7 @@ const PropertySearch = () => {
             <SelectContent>
               <SelectItem value="apartamento">Apartamento</SelectItem>
               <SelectItem value="casa">Casa</SelectItem>
-              <SelectItem value="casa-no-campo">Casa no Campo</SelectItem>
+              <SelectItem value="casa_de_campo">Casa no Campo</SelectItem>
               <SelectItem value="comercial">Comercial</SelectItem>
               <SelectItem value="kitnet">Kitnet</SelectItem>
             </SelectContent>
