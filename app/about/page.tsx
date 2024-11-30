@@ -122,8 +122,7 @@ const About = () => {
               ajudando os pais em casa.
             </p>
             <br />
-            <br />
-            <br />
+
             <br />
             {/* Div com redes socias e contato */}
             <div className="mt-4 flex flex-col items-center justify-center gap-4">
