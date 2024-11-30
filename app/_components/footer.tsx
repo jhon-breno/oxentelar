@@ -1,4 +1,13 @@
-import { Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react"
+import {
+  Phone,
+  MapPin,
+  Facebook,
+  Instagram,
+  LucideBadgeInfo,
+  UniversityIcon,
+  Linkedin,
+} from "lucide-react"
+import Link from "next/link"
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -8,6 +17,13 @@ const Footer = () => {
         {/* Informações de Contato */}
         <div className="mb-6 flex flex-col items-center md:mb-0">
           <h2 className="mb-3 text-xl font-semibold text-white">Contato</h2>
+          <Link
+            href="/about"
+            className="mb-2 flex items-center gap-3 text-lg font-bold text-gray-300 hover:text-white"
+          >
+            <LucideBadgeInfo />
+            Conheça-nos
+          </Link>
           <div className="mb-2 flex items-center">
             <Phone className="mr-2 h-5 w-5" />
             <span>(85) 99946-9423</span>
@@ -18,11 +34,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Redes Sociais */}
         <div className="mb-6 flex flex-col items-center md:mb-0">
-          <h2 className="mb-3 text-xl font-semibold text-white">
-            Redes Sociais
-          </h2>
+          <h2 className="mb-3 text-xl font-semibold text-white">Redes</h2>
           <div className="flex space-x-4">
             <a
               href="https://facebook.com"
@@ -41,12 +54,20 @@ const Footer = () => {
               <Instagram className="h-6 w-6" />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://unifametro.edu.br/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-white"
             >
-              <Twitter />
+              <UniversityIcon />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jhonbrenocosta/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-white"
+            >
+              <Linkedin />
             </a>
           </div>
         </div>

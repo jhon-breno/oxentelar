@@ -23,7 +23,7 @@ const Header = () => {
         <nav className="mx-32 hidden gap-6 text-xl xl:flex">
           <Link
             className="font-bold text-gray-900 hover:text-gray-400"
-            href="#"
+            href="/"
           >
             Início
           </Link>
