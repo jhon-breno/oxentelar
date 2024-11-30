@@ -14,11 +14,13 @@ const RecommendedProperty = async () => {
         </h2>
         <div className="h-[1px] w-full bg-gray-300"></div>
       </div>
-      {properties.map((property) => (
-        <div key={property.id} className="mt-5 flex flex-col items-center">
-          <PropertyItem property={property} />
-        </div>
-      ))}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {properties.map((property) => (
+          <div key={property.id} className="mt-5 flex flex-col items-center">
+            <PropertyItem property={property} />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

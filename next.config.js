@@ -1,12 +1,12 @@
-module.exports = {
+// next.config.js
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "www.sj.com.br",
-        port: "",
-        pathname: "/**/**/**",
-      },
-    ],
+    domains: ["drive.google.com", "www.sj.com.br"],
+
+    // Adicione aqui o domínio necessário
   },
 }
+
+module.exports = nextConfig
