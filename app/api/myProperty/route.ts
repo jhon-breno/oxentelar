@@ -20,8 +20,6 @@ export async function GET() {
       },
     })
 
-    console.log("Propriedades encontradas:", session.user.id)
-
     return NextResponse.json(properties)
   } catch (error) {
     return NextResponse.json(
