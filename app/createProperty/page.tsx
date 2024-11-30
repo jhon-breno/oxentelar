@@ -5,14 +5,15 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../_components/ui/dialog"
-import { formatCurrency } from "../_utils/format"
 import { Button } from "../_components/ui/button"
 import { SquarePlus } from "lucide-react"
+import { Card } from "../_components/ui/card"
 
 const MyProperties = () => {
   const [properties, setProperties] = useState([])
@@ -54,6 +55,15 @@ const MyProperties = () => {
 
     fetchProperties()
   }, [])
+
+  const handlePriceChange = (value: number) => {
+    const valueString = value."toString"().replace(/\D/g, "") // Remove caracteres não numéricos
+    const formatted = (Number(valueString) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })
+    return formatted
+  }
 
   const handleChange = async (
     e: React.ChangeEvent<
@@ -106,7 +116,10 @@ const MyProperties = () => {
       })
 
       if (res.ok) {
+        // Atualizar a página e fechar a modal
+        router.push("/createProperty")
         router.refresh()
+        alert("Imóvel adicionado com sucesso!")
       } else {
         alert("Erro ao adicionar imóvel.")
       }
@@ -129,6 +142,17 @@ const MyProperties = () => {
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleAddProperty} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium">Nome</label>
+              <input
+                type="text"
+                name="name"
+                value={property.name}
+                onChange={handleChange}
+                className="w-full rounded-sm border border-solid border-grayPrimary p-1"
+                required
+              />
+            </div>
             <div className="flex gap-12">
               <div>
                 <label className="block text-sm font-medium">Tipo</label>
@@ -195,7 +219,7 @@ const MyProperties = () => {
                   type="text"
                   name="street"
                   value={property.street}
-                  readOnly
+                  onChange={handleChange}
                   className="input-text rounded-sm border border-solid border-grayPrimary p-1"
                 />
               </div>
@@ -203,13 +227,13 @@ const MyProperties = () => {
               <div>
                 <label className="block text-sm font-medium">Número</label>
                 <input
-                  type="text"
+                  type="number"
                   name="number"
                   onChange={handleChange}
                   value={property.number}
                   className="input-text rounded-sm border border-solid border-grayPrimary p-1"
                   required
-                  placeholder="123 ou SN"
+                  placeholder="123"
                 />
               </div>
             </div>
@@ -258,12 +282,15 @@ const MyProperties = () => {
             <div>
               <label className="block text-sm font-medium">Preço Mensal</label>
               <input
-                type="number"
+                type="text"
                 name="pricePerMonth"
-                // formartar para moeda brasileira no input
-                value={formatCurrency(property.pricePerMonth)}
+                // formartar para moeda brasileira no input ao digitar
+
                 onChange={handleChange}
+                value={handlePriceChange(property.pricePerMonth)}
+                // value={ property.pricePerMonth}
                 className="input-text rounded-sm border border-solid border-grayPrimary p-1"
+                placeholder="R$ 0,00"
                 required
               />
             </div>
@@ -279,16 +306,18 @@ const MyProperties = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full text-lg font-semibold">
-              Salvar
-              <SquarePlus />
-            </Button>
+            <DialogClose asChild>
+              <Button type="submit" className="w-full text-lg font-semibold">
+                Salvar
+                <SquarePlus />
+              </Button>
+            </DialogClose>
           </form>
         </DialogContent>
       </Dialog>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {properties?.map((prop: any) => (
-          <div key={prop.id} className="rounded-lg border p-4 shadow">
+          <Card key={prop.id} className="rounded-lg border p-4 shadow">
             <div className="relative h-[106px] w-[120px]">
               <Image
                 src={prop.coverImage}
@@ -299,9 +328,14 @@ const MyProperties = () => {
               />
             </div>
             <h3 className="mt-2 text-lg font-bold">{prop.name}</h3>
-            <p className="text-sm">{formatCurrency(prop.pricePerMonth)}</p>
+            <p className="text-sm">
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(prop.pricePerMonth)}
+            </p>
             <p className="text-sm text-gray-500">Status: {prop.status}</p>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

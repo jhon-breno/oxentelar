@@ -146,7 +146,12 @@ const CheckoutReservation = ({
           <p className="font-bold text-primaryDarker">
             <BadgeDollarSignIcon size={22} />
           </p>
-          <p>R$ {property.pricePerMonth.toString()},00</p>
+          <p>
+            {new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(property.pricePerMonth)}
+          </p>
         </div>
       </div>
 
