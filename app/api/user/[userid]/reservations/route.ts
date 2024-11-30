@@ -18,10 +18,13 @@ export async function GET(
 
   const reservations = await prisma.propertyReservations.findMany({
     where: {
-      userId: userId,
+      OR: [
+        { userId: userId }, // Busca as reservas onde o usuário é o inquilino
+        { property: { ownerId: userId } }, // Ou onde o usuário é o proprietário
+      ],
     },
     include: {
-      property: true,
+      property: true, // Inclui os dados da propriedade
     },
   })
 

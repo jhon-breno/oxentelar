@@ -35,6 +35,30 @@ export async function POST(request: Request) {
       )
     }
 
+    // Determinar a imagem principal com base no tipo do imóvel
+    const coverImageMap: Record<string, string> = {
+      casa: "https://drive.google.com/uc?export=view&id=1FkYs-59EzZ9LaOc8mqInhtHEZPpGtksm",
+      Apartamento:
+        "https://drive.google.com/uc?export=view&id=1apjWEUMlvGHaHJoLo7lpcoWSmgKkwzqH",
+      Kitnet:
+        "https://drive.google.com/uc?export=view&id=1lW631J_aQol_kUAhzWKrEWtPjPAEBpRk",
+      Comercial:
+        "https://drive.google.com/uc?export=view&id=1eyebOqXCHy_nMKIOn1TuVQ0sUGNcqX4Q",
+      casa_de_campo:
+        "https://drive.google.com/uc?export=view&id=1aNVrvH_1QmpEdEmv97nKi8W3PregYjWm",
+    }
+
+    const defaultCoverImage =
+      "https://drive.google.com/uc?export=view&id=1FkYs-59EzZ9LaOc8mqInhtHEZPpGtksm"
+    const coverImage = coverImageMap[data.type] || defaultCoverImage
+
+    // Lógica para definir se o imóvel é recomendado
+    const recommended =
+      ["Aldeota", "Meirele", "Beira Mar"].includes(data.neighborhood) ||
+      parseFloat(data.pricePerMonth.replace(",", ".")) > 3000
+
+    const complement = data.complement || "Sem Complemento"
+
     // Criar o imóvel com o owner sendo o usuário autenticado
     const newProperty = await prisma.property.create({
       data: {
@@ -44,27 +68,22 @@ export async function POST(request: Request) {
         street: data.street,
         number: parseInt(data.number, 10),
         neighborhood: data.neighborhood || null,
-        complement: data.complement || null,
+        complement,
         city: data.city,
         state: data.state,
-        pricePerMonth: parseFloat(data.pricePerMonth.replace(/[^\d.-]/g, "")),
+        pricePerMonth: parseFloat(data.pricePerMonth.replace(",", ".")),
         owner: {
           connect: { id: userId }, // Associar o imóvel ao usuário autenticado
         },
         description: data.description || null,
-        coverImage:
-          data.coverImage ||
-          "https://www.sj.com.br/appsgi/imagens_anuncios.aspx?foto=44256A",
-        imagesURL: data.imagesURL || [
-          "https://www.sj.com.br/appsgi/imagens_anuncios.aspx?foto=44256A",
-        ],
+        coverImage: data.coverImage || coverImage, // Usar imagem do tipo ou a enviada
+        imagesURL: data.imagesURL || [coverImage], // Usar a mesma lógica para outras imagens
         highlights: data.highlights || [],
         status: data.status || "disponível",
-        maxGuests: data.maxGuests || 0,
-        recommended: data.recommended || false,
-        startDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        // end date será data infinita 31/12/1999 no formato 9999-12-31T00:00:00.000Z
-        endDate: new Date(9999, 11, 31, 0, 0, 0, 0),
+        maxGuests: parseInt(data.maxGuests) || 0,
+        recommended, // Define o valor de "recommended" com base na lógica
+        startDate: new Date(Date.now()),
+        endDate: new Date(9999, 11, 31, 0, 0, 0, 0), // Data infinita
       },
     })
 

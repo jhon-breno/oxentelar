@@ -74,19 +74,16 @@ const ProperyReservation = ({ property }: PropertyReservationProps) => {
       console.log(status)
 
       // Envia a data como ISO para garantir a compatibilidade
-      const response = await fetch(
-        "http://localhost:3000/api/reservations/check",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            startDate: selectedDateTime.toISOString(), // Converte para ISO com fuso horário UTC
-            propertyId: property.id,
-          }),
+      const response = await fetch("/api/reservations/check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      )
+        body: JSON.stringify({
+          startDate: selectedDateTime.toISOString(), // Converte para ISO com fuso horário UTC
+          propertyId: property.id,
+        }),
+      })
 
       const res = await response.json()
       if (res.error) {

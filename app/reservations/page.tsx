@@ -25,9 +25,7 @@ const MyReservations = () => {
       return
     }
 
-    const response = await fetch(
-      `http://localhost:3000/api/user/${userId}/reservations`,
-    )
+    const response = await fetch(`/api/user/${userId}/reservations`)
 
     if (!response.ok) {
       console.error("Error fetching reservations:", response.statusText)
@@ -46,28 +44,33 @@ const MyReservations = () => {
   }, [status, data])
 
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto p-5 sm:w-[50%] lg:w-[50%]">
       <h1 className="text-xl font-semibold text-primaryDarker">
         Minhas Reservas
       </h1>
-      {reservations.length > 0 ? (
-        reservations?.map((reservation) => (
-          <UserReservationItem
-            key={reservation.id}
-            reservation={reservation}
-            fetchReservations={fetchReservations}
-          />
-        ))
-      ) : (
-        <div className="flex flex-col">
-          <p className="mt-2 font-medium text-primaryDarker">
-            Nenhuma reserva encontrada.
-          </p>
-          <Button className="mt-5 text-white" onClick={() => router.push("/")}>
-            Fazer Reserva
-          </Button>
-        </div>
-      )}
+      <div className="mt-5 flex flex-col gap-5 lg:flex-row">
+        {reservations.length > 0 ? (
+          reservations?.map((reservation) => (
+            <UserReservationItem
+              key={reservation.id}
+              reservation={reservation}
+              fetchReservations={fetchReservations}
+            />
+          ))
+        ) : (
+          <div className="flex flex-col">
+            <p className="mt-2 font-medium text-primaryDarker">
+              Nenhuma reserva encontrada.
+            </p>
+            <Button
+              className="mt-5 text-white"
+              onClick={() => router.push("/")}
+            >
+              Fazer Reserva
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
