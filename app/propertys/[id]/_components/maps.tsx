@@ -14,7 +14,6 @@ const Map: React.FC<{ property: Property }> = ({ property }) => {
     width: "100%",
     height: "300px",
   }
-
   interface GeocodeResult {
     geometry: {
       location: {
@@ -63,6 +62,7 @@ const Map: React.FC<{ property: Property }> = ({ property }) => {
     if (property) {
       fetchCoordinates()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [property]) // Executa quando 'property' mudar
 
   return (
