@@ -14,6 +14,13 @@ interface CheckoutReservationProps {
   time: string
 }
 
+interface User {
+  id: string
+  name: string
+  email: string
+  // Adicione outras propriedades do usuário conforme necessário
+}
+
 const CheckoutReservation = ({
   property,
   date,
@@ -74,7 +81,7 @@ const CheckoutReservation = ({
           propertyId: property.id,
           startDate: startDate, // Enviar data no formato correto
           endDate: endDate, // Enviar data no formato correto
-          userId: (data?.user as any)?.id,
+          userId: (data?.user as User)?.id,
           totalRent: property.pricePerMonth,
         }),
         headers: {
