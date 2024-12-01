@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -39,6 +38,14 @@ const MyProperties = () => {
     maxGuests: 0,
     recommended: false,
   })
+
+  interface PropertyCard {
+    id: string
+    coverImage: string
+    name: string
+    pricePerMonth: number
+    status: string
+  }
 
   const [propertyToDelete, setPropertyToDelete] = useState(null)
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
@@ -608,7 +615,7 @@ const MyProperties = () => {
         </DialogContent>
       </Dialog>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {properties?.map((prop: any) => (
+        {properties?.map((prop: PropertyCard) => (
           <Card
             key={prop.id}
             className="flex items-center justify-between rounded-lg border p-4 shadow"
