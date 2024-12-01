@@ -1,8 +1,7 @@
 "use client"
-import React, { useState, useEffect, use } from "react"
+import React, { useState, useEffect } from "react"
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api"
 import { Property } from "@prisma/client"
-import { useRouter } from "next/navigation"
 
 const Map: React.FC<{ property: Property }> = ({ property }) => {
   const [coordinates, setCoordinates] = useState<{
@@ -14,6 +13,20 @@ const Map: React.FC<{ property: Property }> = ({ property }) => {
   const containerStyle = {
     width: "100%",
     height: "300px",
+  }
+
+  interface GeocodeResult {
+    geometry: {
+      location: {
+        lat: number
+        lng: number
+      }
+    }
+  }
+
+  interface GeocodeResponse {
+    results: GeocodeResult[]
+    status: string
   }
 
   // Função para corrigir o endereço e buscar coordenadas
@@ -28,16 +41,20 @@ const Map: React.FC<{ property: Property }> = ({ property }) => {
         )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
       )
 
-      const data = await response.json()
-      if (data.results && data.results[0]) {
+      const data: GeocodeResponse = await response.json()
+
+      if (data.status === "OK" && data.results.length > 0) {
         const location = data.results[0].geometry.location
-        setCoordinates({ lat: location.lat, lng: location.lng })
+        setCoordinates({
+          lat: location.lat,
+          lng: location.lng,
+        })
       } else {
         setError("Endereço não encontrado.")
       }
-    } catch (error) {
-      console.error("Erro ao buscar as coordenadas:", error)
-      setError("Erro ao buscar as coordenadas.")
+    } catch (err) {
+      setError("Erro ao buscar coordenadas.")
+      console.error("Error fetching coordinates:", err)
     }
   }
 
