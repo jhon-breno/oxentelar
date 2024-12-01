@@ -68,22 +68,19 @@ const CheckoutReservation = ({
       const startDate = new Date(`${date}T${time}`).toISOString() // Converter para o formato ISO 8601
       const endDate = startDate // Usar a mesma data para endDate, caso seja necessário ajustar, altere aqui
 
-      const response = await fetch(
-        "http://localhost:3000/api/reservations/create",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            propertyId: property.id,
-            startDate: startDate, // Enviar data no formato correto
-            endDate: endDate, // Enviar data no formato correto
-            userId: (data?.user as any)?.id,
-            totalRent: property.pricePerMonth,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await fetch("/api/reservations/create", {
+        method: "POST",
+        body: JSON.stringify({
+          propertyId: property.id,
+          startDate: startDate, // Enviar data no formato correto
+          endDate: endDate, // Enviar data no formato correto
+          userId: (data?.user as any)?.id,
+          totalRent: property.pricePerMonth,
+        }),
+        headers: {
+          "Content-Type": "application/json",
         },
-      )
+      })
 
       if (!response.ok) {
         throw new Error(`Erro ao criar reserva: ${response.statusText}`)
