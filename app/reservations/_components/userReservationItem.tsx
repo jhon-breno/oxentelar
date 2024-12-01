@@ -10,10 +10,12 @@ import {
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog"
 import { toast } from "@/app/_hooks/use-toast"
-import { Prisma } from "@prisma/client"
+import { Prisma, Property } from "@prisma/client"
 import { CalendarClock, MapPin } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
+import { Card, CardContent } from "@/app/_components/ui/card"
+import { useSession } from "next-auth/react"
 
 interface UserReservationItemProps {
   reservation: Prisma.PropertyReservationsGetPayload<{
@@ -22,16 +24,20 @@ interface UserReservationItemProps {
   fetchReservations: () => void
 }
 
+interface CheckoutReservationProps {
+  property: Property & { owner: { name: string; phone: string } } // Inclui os campos do proprietário
+  date: string
+  time: string
+}
+
 const UserReservationItem = ({
   reservation,
   fetchReservations,
 }: UserReservationItemProps) => {
   const [open, setOpen] = useState(false) // Controla a abertura do Alert Dialog
 
-  // Extração de data e hora de startDate
   const startDateTime = new Date(reservation.startDate)
 
-  // Formatação de data e hora
   const formattedDate = startDateTime.toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "2-digit",
@@ -43,7 +49,6 @@ const UserReservationItem = ({
     minute: "2-digit",
   })
 
-  // Função para cancelar a reserva
   const handleDeleteReservation = async () => {
     try {
       const res = await fetch(`/api/reservations/${reservation.id}`, {
@@ -54,16 +59,13 @@ const UserReservationItem = ({
         throw new Error("Erro ao cancelar reserva")
       }
 
-      setOpen(false) // Fecha o Alert Dialog
+      setOpen(false)
       toast({
         title: "Sucesso!",
         description: "Reserva cancelada com sucesso.",
         variant: "success",
       })
-      fetchReservations() // Atualiza a lista de reservas
-      //   setTimeout(() => {
-      //     window.location.reload()
-      //   }, 3000)
+      fetchReservations()
     } catch (error) {
       toast({
         title: "Erro",
@@ -74,45 +76,48 @@ const UserReservationItem = ({
   }
 
   return (
-    <div className="mt-5 flex items-center gap-3 rounded-lg border border-solid border-grayLighter p-5 shadow-lg">
-      <div className="flex items-center gap-3">
+    <Card className="p-4 shadow-lg">
+      <CardContent className="flex flex-col items-center gap-5 sm:flex-col sm:items-start">
         {/* Imagem da propriedade */}
-        <div className="relative h-[106px] w-[124px]">
+        <div className="relative h-28 w-32 flex-shrink-0 sm:h-36 sm:w-40">
           <Image
             alt={reservation.property.name}
             src={reservation.property.coverImage}
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-md"
             style={{ objectFit: "cover" }}
             fill
           />
         </div>
+
         {/* Detalhes da reserva */}
-        <div className="flex flex-col">
-          <h2 className="text-xl font-semibold text-primaryDarker">
+        <div className="flex w-full flex-col sm:w-auto">
+          <h2 className="text-center text-base font-semibold text-primaryDarker sm:text-left">
             {reservation.property.name}
           </h2>
+
           {/* Localização */}
-          <div className="my-1 flex items-center gap-3">
+          <div className="my-2 flex items-center gap-2 sm:gap-3">
             <MapPin size={18} />
-            <p className="w-[250px] text-xs text-gray-500">
+            <p className="text-xs text-gray-500 sm:text-sm">
               {reservation.property.street}, {reservation.property.number} -{" "}
               {reservation.property.complement}
               <br />
               {reservation.property.city} / {reservation.property.state}
             </p>
           </div>
+
           {/* Data e hora */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <CalendarClock size={18} />
-            <p className="w-[250px] text-xs text-gray-500">
+            <p className="text-xs text-gray-500 sm:text-sm">
               {formattedDate} às {formattedTime}
             </p>
           </div>
 
-          {/* Alert Dialog para confirmar cancelamento */}
+          {/* Botão de cancelamento */}
           <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive" className="mt-5">
+              <Button variant="destructive" className="mt-4 w-full sm:w-auto">
                 Cancelar
               </Button>
             </AlertDialogTrigger>
@@ -133,8 +138,8 @@ const UserReservationItem = ({
             </AlertDialogContent>
           </AlertDialog>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
 
