@@ -3,18 +3,28 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth" // Se estiver usando next-auth
 import { authOptions } from "../auth/[...nextauth]/route"
 
+interface SessionUser {
+  id: string
+  email: string
+  name: string
+}
+
 export async function POST(request: Request) {
   try {
     // Recuperar o usuário autenticado
     const session = await getServerSession(authOptions)
-    if (!session || !(session?.user as any) || !(session?.user as any).id) {
+    if (
+      !session ||
+      !(session.user as SessionUser) ||
+      !(session.user as SessionUser).id
+    ) {
       return NextResponse.json(
         { error: "Usuário não autenticado." },
         { status: 401 },
       )
     }
 
-    const userId = (session?.user as any).id // ID do usuário autenticado
+    const userId = (session.user as SessionUser).id // ID do usuário autenticado
     const data = await request.json()
 
     console.log("Dados recebidos no endpoint:", data)
