@@ -11,7 +11,6 @@ import {
   LogOut,
   MenuIcon,
   Search,
-  Settings2,
 } from "lucide-react"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet"
 import { Button } from "./ui/button"
@@ -183,15 +182,6 @@ const SheetMenu = () => {
                 ) : (
                   <></>
                 )}
-
-                <Link
-                  href="/"
-                  className="text-gr flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  prefetch={false}
-                >
-                  <Settings2 className="h-5 w-5 transition-all" />
-                  Preferências
-                </Link>
 
                 {data?.user ? (
                   <SheetClose asChild>
