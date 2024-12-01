@@ -1,7 +1,6 @@
 import {
   Phone,
   MapPin,
-  Facebook,
   Instagram,
   LucideBadgeInfo,
   UniversityIcon,

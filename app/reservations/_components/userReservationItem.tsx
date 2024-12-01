@@ -10,12 +10,11 @@ import {
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog"
 import { toast } from "@/app/_hooks/use-toast"
-import { Prisma, Property } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { CalendarClock, MapPin } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 import { Card, CardContent } from "@/app/_components/ui/card"
-import { useSession } from "next-auth/react"
 
 interface UserReservationItemProps {
   reservation: Prisma.PropertyReservationsGetPayload<{
