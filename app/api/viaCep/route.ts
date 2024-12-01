@@ -18,6 +18,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(data)
   } catch (error) {
+    console.error("Erro ao buscar CEP:", error)
     return NextResponse.json(
       { error: "Erro ao buscar o CEP." },
       { status: 500 },
