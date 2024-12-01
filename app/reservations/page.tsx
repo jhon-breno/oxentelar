@@ -6,6 +6,15 @@ import { useRouter } from "next/navigation"
 import { Prisma } from "@prisma/client"
 import UserReservationItem from "./_components/userReservationItem"
 import { Button } from "../_components/ui/button"
+import { DefaultSession } from "next-auth"
+
+declare module "next-auth" {
+  interface Session {
+    user?: {
+      id: string
+    } & DefaultSession["user"]
+  }
+}
 
 const MyReservations = () => {
   const [reservations, setReservations] = useState<
@@ -17,7 +26,7 @@ const MyReservations = () => {
   const router = useRouter()
 
   const fetchReservations = async () => {
-    const userId = (data?.user as any)?.id
+    const userId = data?.user?.id
     console.log("User ID:", userId) // Verifique se o userId está correto
 
     if (!userId) {
@@ -41,6 +50,7 @@ const MyReservations = () => {
     }
 
     fetchReservations()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, data])
 
   return (
