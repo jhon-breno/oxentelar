@@ -24,12 +24,6 @@ interface UserReservationItemProps {
   fetchReservations: () => void
 }
 
-interface CheckoutReservationProps {
-  property: Property & { owner: { name: string; phone: string } } // Inclui os campos do proprietário
-  date: string
-  time: string
-}
-
 const UserReservationItem = ({
   reservation,
   fetchReservations,
@@ -67,6 +61,9 @@ const UserReservationItem = ({
       })
       fetchReservations()
     } catch (error) {
+      console.error("Erro ao cancelar reserva:", error)
+    }
+    {
       toast({
         title: "Erro",
         description: "Não foi possível cancelar a reserva.",
